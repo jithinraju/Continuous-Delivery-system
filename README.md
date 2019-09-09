@@ -17,9 +17,9 @@
     production_user: ec2-user
     git_url: https://github.com/jithinraju/delivery.git
     clone_dir: /var/image_content
-    username: jithinraju
-    email: jithinraju007@gmail.com
-    password: jithu@844744
+    username: Dockerhub_username
+    email: Dockerhub_Email
+    password: Dockerhub_password
     user1: ec2-user
     group1: docker
   tasks:
