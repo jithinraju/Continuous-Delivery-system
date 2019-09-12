@@ -1,3 +1,24 @@
+# Contionuous Delivery System
+
+Here I experimented with a continuous delivery system combining different technologies.  By running this ansible-playbook, two EC2 instances are created and one will act as a build server and the other a production server.  
+
+## Technologies used
+
+- AWS
+- ANSIBLE
+- DOCKER
+- GIT 
+
+### Build server
+Build server will clone the mentioned repository from GIT and creates a DOCKER image from the Dockerfile we have uploaded in GIT. 
+This image is uploaded to Dockerhub.
+
+Two images are created while running the Playbook, One latest images and the other one is created according to the Tag we are assigining while commiting. Latest image is always updated once the repository is updated.
+
+Image is created only if the repository is updated.
+
+### Production server
+Production server fetches the image from Dockerhub and  creates a container
 
 
 ```bash
@@ -124,6 +145,8 @@
           ansible_ssh_private_key_file: "./{{ key_pair }}.pub"
           ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
 
+#build instance
+
      - name: "Installing git"
        delegate_to: build
        become: yes
@@ -220,6 +243,8 @@
        with_items:
           - latest
           - "{{ latest_tag.stdout }}"
+          
+  #production instance        
 
      - name: "Installing Docker and pip"
        delegate_to: production
